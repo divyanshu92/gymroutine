@@ -27,17 +27,17 @@ const DaySelection: React.FC<DaySelectionProps> = ({ onDaySelect }) => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4">
-      <div className="max-w-sm mx-auto">
-        <h1 className="text-2xl font-bold mb-8 text-center text-gray-800">Gym Routine</h1>
+    <div className="min-h-screen bg-gray-50 safe-top safe-bottom safe-left safe-right">
+      <div className="max-w-sm mx-auto px-4">
+        <h1 className="text-responsive-xl font-bold mb-6 text-center text-gray-800 pt-4">Gym Routine</h1>
         
-        <div className="mb-8 bg-white rounded-xl p-6 shadow-sm">
-          <label className="block text-base font-semibold mb-3 text-gray-700">Select Date:</label>
+        <div className="mb-6 bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+          <label className="block text-responsive font-semibold mb-3 text-gray-700">Select Date:</label>
           <input
             type="date"
             value={selectedDate}
             onChange={(e) => handleDateChange(e.target.value)}
-            className="w-full p-4 border-2 border-gray-200 rounded-xl text-lg focus:border-blue-500 focus:outline-none"
+            className="w-full p-4 border-2 border-gray-200 rounded-xl text-responsive focus:border-blue-500 focus:outline-none touch-action-manipulation"
           />
           <div className="mt-3 text-sm text-gray-600 text-center">
             {new Date(selectedDate).toLocaleDateString('en-US', { 
@@ -48,12 +48,12 @@ const DaySelection: React.FC<DaySelectionProps> = ({ onDaySelect }) => {
           </div>
         </div>
         
-        <div className="space-y-3">
+        <div className="space-y-3 pb-6">
           {days.map((day) => (
             <button
               key={day}
               onClick={() => handleDaySelect(day)}
-              className="w-full p-4 bg-blue-500 text-white rounded-xl font-semibold text-lg active:bg-blue-600 transition-colors shadow-sm"
+              className="w-full p-4 bg-blue-500 text-white rounded-2xl font-semibold text-responsive-lg active:bg-blue-600 active:scale-95 transition-all duration-150 shadow-sm touch-action-manipulation"
             >
               {day}
             </button>

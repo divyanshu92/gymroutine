@@ -80,48 +80,48 @@ const ExerciseTracker: React.FC<ExerciseTrackerProps> = ({ exercise, onSave, onB
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="sticky top-0 bg-white shadow-sm z-10 p-4">
-        <div className="flex items-center max-w-sm mx-auto">
+      <div className="sticky top-0 bg-white shadow-sm z-10 safe-top">
+        <div className="flex items-center max-w-sm mx-auto px-4 py-3">
           <button 
             onClick={onBack}
-            className="p-3 bg-gray-100 rounded-xl active:bg-gray-200 mr-4"
+            className="p-3 bg-gray-100 rounded-2xl active:bg-gray-200 active:scale-95 transition-all duration-150 mr-4 touch-action-manipulation"
           >
             ←
           </button>
-          <h1 className="text-lg font-bold text-gray-800 flex-1">{exercise.name}</h1>
+          <h1 className="text-responsive-lg font-bold text-gray-800 flex-1 truncate">{exercise.name}</h1>
         </div>
       </div>
 
-      <div className="p-4">
-        <div className="max-w-sm mx-auto">
+      <div className="px-4 safe-left safe-right">
+        <div className="max-w-sm mx-auto pt-4">
           {exercise.gif && (
             <div className="mb-6">
               <img 
                 src={exercise.gif} 
                 alt={exercise.name}
-                className="w-full h-48 rounded-xl object-cover bg-gray-100"
+                className="w-full h-44 rounded-2xl object-cover bg-gray-100"
               />
             </div>
           )}
 
           {isRepBased && (
-            <div className="mb-6 p-4 bg-blue-50 rounded-xl">
+            <div className="mb-6 p-5 bg-blue-50 rounded-2xl">
               <div className="text-center">
-                <div className="flex items-center justify-center gap-3 mb-2">
-                  <div className="text-2xl font-bold text-blue-600">{totalRepsCompleted}/{targetReps}</div>
+                <div className="flex items-center justify-center gap-3 mb-3">
+                  <div className="text-responsive-xl font-bold text-blue-600">{totalRepsCompleted}/{targetReps}</div>
                   <button
                     onClick={() => setShowTargetEditor(!showTargetEditor)}
-                    className="text-xs bg-blue-500 text-white px-3 py-1 rounded-full active:bg-blue-600"
+                    className="text-xs bg-blue-500 text-white px-3 py-2 rounded-full active:bg-blue-600 active:scale-95 transition-all duration-150 touch-action-manipulation"
                   >
                     Edit
                   </button>
                 </div>
                 {showTargetEditor && (
-                  <div className="mb-3 flex items-center justify-center gap-2">
+                  <div className="mb-4 flex items-center justify-center gap-2">
                     <input
                       type="number"
                       placeholder={targetReps.toString()}
-                      className="w-20 p-2 border rounded-lg text-center"
+                      className="w-20 p-3 border-2 rounded-xl text-center text-responsive touch-action-manipulation"
                       onKeyPress={(e) => {
                         if (e.key === 'Enter') {
                           const newTarget = parseInt((e.target as HTMLInputElement).value);
@@ -131,20 +131,20 @@ const ExerciseTracker: React.FC<ExerciseTrackerProps> = ({ exercise, onSave, onB
                     />
                     <button
                       onClick={() => setShowTargetEditor(false)}
-                      className="text-xs bg-gray-500 text-white px-3 py-1 rounded-full"
+                      className="text-xs bg-gray-500 text-white px-3 py-2 rounded-full active:scale-95 transition-all duration-150 touch-action-manipulation"
                     >
                       Cancel
                     </button>
                   </div>
                 )}
                 <div className="text-xs text-gray-600 mb-3">Total Reps</div>
-                <div className="mb-3">
-                  <div className="text-base font-semibold text-orange-600">{remainingReps} left</div>
+                <div className="mb-4">
+                  <div className="text-responsive font-semibold text-orange-600">{remainingReps} left</div>
                   <div className="text-xs text-gray-600">{sets.length} sets done</div>
                 </div>
-                <div className="bg-gray-200 rounded-full h-2">
+                <div className="bg-gray-200 rounded-full h-3">
                   <div 
-                    className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+                    className="bg-blue-600 h-3 rounded-full transition-all duration-300"
                     style={{ width: `${Math.min(100, (totalRepsCompleted / targetReps) * 100)}%` }}
                   ></div>
                 </div>
@@ -153,16 +153,16 @@ const ExerciseTracker: React.FC<ExerciseTrackerProps> = ({ exercise, onSave, onB
           )}
 
           {isWeightBased && (
-            <div className="mb-6 p-4 bg-green-50 rounded-xl">
+            <div className="mb-6 p-5 bg-green-50 rounded-2xl">
               <div className="text-center">
-                <div className="text-2xl font-bold text-green-600 mb-2">{sets.length}/{targetSets}</div>
+                <div className="text-responsive-xl font-bold text-green-600 mb-3">{sets.length}/{targetSets}</div>
                 <div className="text-xs text-gray-600 mb-3">Sets Completed</div>
-                <div className="mb-3">
-                  <div className="text-base font-semibold text-orange-600">{remainingSets} sets left</div>
+                <div className="mb-4">
+                  <div className="text-responsive font-semibold text-orange-600">{remainingSets} sets left</div>
                 </div>
-                <div className="bg-gray-200 rounded-full h-2">
+                <div className="bg-gray-200 rounded-full h-3">
                   <div 
-                    className="bg-green-600 h-2 rounded-full transition-all duration-300"
+                    className="bg-green-600 h-3 rounded-full transition-all duration-300"
                     style={{ width: `${Math.min(100, (sets.length / targetSets) * 100)}%` }}
                   ></div>
                 </div>
@@ -202,14 +202,14 @@ const ExerciseTracker: React.FC<ExerciseTrackerProps> = ({ exercise, onSave, onB
             }
           </div>
         )}
-            <div className="space-y-3">
+            <div className="space-y-4">
               {exercise.type === 'reps' ? (
                 <input
                   type="number"
                   placeholder={isRepBased ? `Reps (${remainingReps} left)` : "Reps"}
                   value={reps}
                   onChange={(e) => setReps(e.target.value)}
-                  className="w-full p-4 border-2 border-gray-200 rounded-xl text-lg focus:border-blue-500 focus:outline-none"
+                  className="w-full p-4 border-2 border-gray-200 rounded-2xl text-responsive-lg focus:border-blue-500 focus:outline-none touch-action-manipulation"
                 />
               ) : (
                 <input
@@ -217,12 +217,12 @@ const ExerciseTracker: React.FC<ExerciseTrackerProps> = ({ exercise, onSave, onB
                   placeholder="Weight (kg)"
                   value={weight}
                   onChange={(e) => setWeight(e.target.value)}
-                  className="w-full p-4 border-2 border-gray-200 rounded-xl text-lg focus:border-blue-500 focus:outline-none"
+                  className="w-full p-4 border-2 border-gray-200 rounded-2xl text-responsive-lg focus:border-blue-500 focus:outline-none touch-action-manipulation"
                 />
               )}
               <button
                 onClick={addSet}
-                className="w-full py-4 bg-blue-500 text-white rounded-xl font-semibold text-lg active:bg-blue-600 transition-colors"
+                className="w-full py-4 bg-blue-500 text-white rounded-2xl font-semibold text-responsive-lg active:bg-blue-600 active:scale-95 transition-all duration-150 touch-action-manipulation"
               >
                 Add Set {currentSet}
               </button>
@@ -230,19 +230,19 @@ const ExerciseTracker: React.FC<ExerciseTrackerProps> = ({ exercise, onSave, onB
       </div>
 
           <div className="mb-6">
-            <h3 className="text-base font-semibold mb-3 text-gray-700">Completed Sets</h3>
+            <h3 className="text-responsive font-semibold mb-4 text-gray-700">Completed Sets</h3>
             {sets.length === 0 ? (
-              <p className="text-gray-500 text-center py-4">No sets completed yet</p>
+              <p className="text-gray-500 text-center py-6 text-responsive">No sets completed yet</p>
             ) : (
-              <div className="space-y-2">
+              <div className="space-y-3">
                 {sets.map((set, index) => (
-                  <div key={index} className="flex justify-between items-center p-3 bg-white rounded-xl border border-gray-100">
-                    <span className="text-sm font-medium">
+                  <div key={index} className="flex justify-between items-center p-4 bg-white rounded-2xl border border-gray-100">
+                    <span className="text-responsive font-medium">
                       Set {set.set}: {exercise.type === 'reps' ? `${set.reps} reps` : `${set.weight} kg`}
                     </span>
                     <button
                       onClick={() => removeSet(index)}
-                      className="text-red-500 p-2 active:text-red-700"
+                      className="text-red-500 p-2 active:text-red-700 active:scale-95 transition-all duration-150 touch-action-manipulation"
                     >
                       ×
                     </button>
@@ -252,18 +252,20 @@ const ExerciseTracker: React.FC<ExerciseTrackerProps> = ({ exercise, onSave, onB
             )}
           </div>
 
-          {sets.length > 0 && (
-            <button
-              onClick={handleSave}
-              className={`w-full py-4 rounded-xl text-white font-semibold text-lg transition-colors ${
-                (isRepBased && remainingReps === 0) || (isWeightBased && remainingSets === 0)
-                  ? 'bg-green-500 active:bg-green-600' 
-                  : 'bg-blue-500 active:bg-blue-600'
-              }`}
-            >
-              {(isRepBased && remainingReps === 0) || (isWeightBased && remainingSets === 0) ? '🎉 Complete!' : 'Save Exercise'}
-            </button>
-          )}
+          <div className="pb-8 safe-bottom">
+            {sets.length > 0 && (
+              <button
+                onClick={handleSave}
+                className={`w-full py-4 rounded-2xl text-white font-semibold text-responsive-lg transition-all duration-150 active:scale-95 touch-action-manipulation ${
+                  (isRepBased && remainingReps === 0) || (isWeightBased && remainingSets === 0)
+                    ? 'bg-green-500 active:bg-green-600' 
+                    : 'bg-blue-500 active:bg-blue-600'
+                }`}
+              >
+                {(isRepBased && remainingReps === 0) || (isWeightBased && remainingSets === 0) ? '🎉 Complete!' : 'Save Exercise'}
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </div>

@@ -35,16 +35,16 @@ const ExerciseSelection: React.FC<ExerciseSelectionProps> = ({
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="sticky top-0 bg-white shadow-sm z-10 p-4">
-        <div className="flex items-center justify-between max-w-sm mx-auto">
+      <div className="sticky top-0 bg-white shadow-sm z-10 safe-top">
+        <div className="flex items-center justify-between max-w-sm mx-auto px-4 py-3">
           <button 
             onClick={onBack}
-            className="p-3 bg-gray-100 rounded-xl active:bg-gray-200"
+            className="p-3 bg-gray-100 rounded-2xl active:bg-gray-200 active:scale-95 transition-all duration-150 touch-action-manipulation"
           >
-            ← Back
+            ←
           </button>
-          <div className="text-center">
-            <h1 className="text-lg font-bold text-gray-800">{selectedDay}</h1>
+          <div className="text-center flex-1">
+            <h1 className="text-responsive-lg font-bold text-gray-800">{selectedDay}</h1>
             <div className="text-xs text-gray-500">
               {new Date(selectedDate).toLocaleDateString('en-US', { 
                 month: 'short', 
@@ -61,31 +61,31 @@ const ExerciseSelection: React.FC<ExerciseSelectionProps> = ({
         </div>
       </div>
       
-      <div className="p-4 pb-32">
-        <div className="max-w-sm mx-auto space-y-3">
+      <div className="px-4 pb-40 safe-left safe-right">
+        <div className="max-w-sm mx-auto space-y-3 pt-4">
           {exercises.map((exercise, index) => {
             const isCompleted = completedExercises.includes(exercise.name);
             return (
               <button
                 key={index}
                 onClick={() => onExerciseSelect(exercise)}
-                className={`w-full p-4 rounded-xl transition-colors text-left shadow-sm ${
+                className={`w-full p-4 rounded-2xl transition-all duration-150 text-left shadow-sm active:scale-98 touch-action-manipulation ${
                   isCompleted 
                     ? 'bg-green-50 border-2 border-green-200' 
                     : 'bg-white border-2 border-gray-100 active:border-blue-300'
                 }`}
               >
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center flex-1">
+                  <div className="flex items-center flex-1 min-w-0">
                     {exercise.gif && (
                       <img 
                         src={exercise.gif} 
                         alt={exercise.name}
-                        className="w-14 h-14 rounded-lg mr-3 object-cover bg-gray-100"
+                        className="w-12 h-12 rounded-xl mr-3 object-cover bg-gray-100 flex-shrink-0"
                       />
                     )}
-                    <div className="flex-1">
-                      <div className="font-semibold text-gray-800 text-sm leading-tight">{exercise.name}</div>
+                    <div className="flex-1 min-w-0">
+                      <div className="font-semibold text-gray-800 text-responsive leading-tight truncate">{exercise.name}</div>
                       <div className="text-xs text-gray-500 mt-1">
                         {exercise.type === 'reps' ? 
                           ('targetReps' in exercise ? `${exercise.targetReps} reps` : 'Reps') : 
@@ -94,7 +94,7 @@ const ExerciseSelection: React.FC<ExerciseSelectionProps> = ({
                       </div>
                     </div>
                   </div>
-                  {isCompleted && <span className="text-green-500 text-xl ml-2">✓</span>}
+                  {isCompleted && <span className="text-green-500 text-lg ml-2 flex-shrink-0">✓</span>}
                 </div>
               </button>
             );
