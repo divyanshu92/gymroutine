@@ -79,12 +79,12 @@ const ExerciseTracker: React.FC<ExerciseTrackerProps> = ({ exercise, onSave, onB
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="sticky top-0 bg-white shadow-sm z-10 safe-top">
+    <div className="h-screen bg-gray-50 flex flex-col overflow-hidden">
+      <div className="bg-white shadow-sm z-10 safe-top flex-shrink-0">
         <div className="flex items-center max-w-sm mx-auto px-4 py-3">
           <button 
             onClick={onBack}
-            className="p-3 bg-gray-100 rounded-2xl active:bg-gray-200 active:scale-95 transition-all duration-150 mr-4 touch-action-manipulation"
+            className="p-3 bg-gray-100 rounded-2xl mr-4 touch-action-manipulation active-scale"
           >
             ←
           </button>
@@ -92,8 +92,9 @@ const ExerciseTracker: React.FC<ExerciseTrackerProps> = ({ exercise, onSave, onB
         </div>
       </div>
 
-      <div className="px-4 safe-left safe-right">
-        <div className="max-w-sm mx-auto pt-4">
+      <div className="flex-1 overflow-hidden">
+        <div className="h-full scroll-container px-4 safe-left safe-right">
+          <div className="max-w-sm mx-auto pt-4">
           {exercise.gif && (
             <div className="mb-6">
               <img 
@@ -209,7 +210,8 @@ const ExerciseTracker: React.FC<ExerciseTrackerProps> = ({ exercise, onSave, onB
                   placeholder={isRepBased ? `Reps (${remainingReps} left)` : "Reps"}
                   value={reps}
                   onChange={(e) => setReps(e.target.value)}
-                  className="w-full p-4 border-2 border-gray-200 rounded-2xl text-responsive-lg focus:border-blue-500 focus:outline-none touch-action-manipulation"
+                  className="w-full p-4 border-2 border-gray-200 rounded-2xl focus:border-blue-500 focus:outline-none touch-action-manipulation"
+                  style={{ fontSize: '16px' }}
                 />
               ) : (
                 <input
@@ -217,12 +219,13 @@ const ExerciseTracker: React.FC<ExerciseTrackerProps> = ({ exercise, onSave, onB
                   placeholder="Weight (kg)"
                   value={weight}
                   onChange={(e) => setWeight(e.target.value)}
-                  className="w-full p-4 border-2 border-gray-200 rounded-2xl text-responsive-lg focus:border-blue-500 focus:outline-none touch-action-manipulation"
+                  className="w-full p-4 border-2 border-gray-200 rounded-2xl focus:border-blue-500 focus:outline-none touch-action-manipulation"
+                  style={{ fontSize: '16px' }}
                 />
               )}
               <button
                 onClick={addSet}
-                className="w-full py-4 bg-blue-500 text-white rounded-2xl font-semibold text-responsive-lg active:bg-blue-600 active:scale-95 transition-all duration-150 touch-action-manipulation"
+                className="w-full py-4 bg-blue-500 text-white rounded-2xl font-semibold text-responsive-lg touch-action-manipulation active-scale"
               >
                 Add Set {currentSet}
               </button>
@@ -242,7 +245,7 @@ const ExerciseTracker: React.FC<ExerciseTrackerProps> = ({ exercise, onSave, onB
                     </span>
                     <button
                       onClick={() => removeSet(index)}
-                      className="text-red-500 p-2 active:text-red-700 active:scale-95 transition-all duration-150 touch-action-manipulation"
+                      className="text-red-500 p-2 touch-action-manipulation active-scale"
                     >
                       ×
                     </button>
@@ -256,15 +259,16 @@ const ExerciseTracker: React.FC<ExerciseTrackerProps> = ({ exercise, onSave, onB
             {sets.length > 0 && (
               <button
                 onClick={handleSave}
-                className={`w-full py-4 rounded-2xl text-white font-semibold text-responsive-lg transition-all duration-150 active:scale-95 touch-action-manipulation ${
+                className={`w-full py-4 rounded-2xl text-white font-semibold text-responsive-lg touch-action-manipulation active-scale ${
                   (isRepBased && remainingReps === 0) || (isWeightBased && remainingSets === 0)
-                    ? 'bg-green-500 active:bg-green-600' 
-                    : 'bg-blue-500 active:bg-blue-600'
+                    ? 'bg-green-500' 
+                    : 'bg-blue-500'
                 }`}
               >
                 {(isRepBased && remainingReps === 0) || (isWeightBased && remainingSets === 0) ? '🎉 Complete!' : 'Save Exercise'}
               </button>
             )}
+          </div>
           </div>
         </div>
       </div>

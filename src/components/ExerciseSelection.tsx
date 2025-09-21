@@ -34,12 +34,12 @@ const ExerciseSelection: React.FC<ExerciseSelectionProps> = ({
   const completedExercises = todayWorkout?.exercises.map(e => e.name) || [];
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="sticky top-0 bg-white shadow-sm z-10 safe-top">
+    <div className="h-screen bg-gray-50 flex flex-col overflow-hidden">
+      <div className="bg-white shadow-sm z-10 safe-top flex-shrink-0">
         <div className="flex items-center justify-between max-w-sm mx-auto px-4 py-3">
           <button 
             onClick={onBack}
-            className="p-3 bg-gray-100 rounded-2xl active:bg-gray-200 active:scale-95 transition-all duration-150 touch-action-manipulation"
+            className="p-3 bg-gray-100 rounded-2xl touch-action-manipulation active-scale"
           >
             ←
           </button>
@@ -61,44 +61,46 @@ const ExerciseSelection: React.FC<ExerciseSelectionProps> = ({
         </div>
       </div>
       
-      <div className="px-4 pb-40 safe-left safe-right">
-        <div className="max-w-sm mx-auto space-y-3 pt-4">
-          {exercises.map((exercise, index) => {
-            const isCompleted = completedExercises.includes(exercise.name);
-            return (
-              <button
-                key={index}
-                onClick={() => onExerciseSelect(exercise)}
-                className={`w-full p-4 rounded-2xl transition-all duration-150 text-left shadow-sm active:scale-98 touch-action-manipulation ${
-                  isCompleted 
-                    ? 'bg-green-50 border-2 border-green-200' 
-                    : 'bg-white border-2 border-gray-100 active:border-blue-300'
-                }`}
-              >
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center flex-1 min-w-0">
-                    {exercise.gif && (
-                      <img 
-                        src={exercise.gif} 
-                        alt={exercise.name}
-                        className="w-12 h-12 rounded-xl mr-3 object-cover bg-gray-100 flex-shrink-0"
-                      />
-                    )}
-                    <div className="flex-1 min-w-0">
-                      <div className="font-semibold text-gray-800 text-responsive leading-tight truncate">{exercise.name}</div>
-                      <div className="text-xs text-gray-500 mt-1">
-                        {exercise.type === 'reps' ? 
-                          ('targetReps' in exercise ? `${exercise.targetReps} reps` : 'Reps') : 
-                          ('targetSets' in exercise ? `${exercise.targetSets} sets` : 'Weight')
-                        }
+      <div className="flex-1 overflow-hidden">
+        <div className="h-full scroll-container px-4 safe-left safe-right">
+          <div className="max-w-sm mx-auto space-y-3 pt-4 pb-40">
+            {exercises.map((exercise, index) => {
+              const isCompleted = completedExercises.includes(exercise.name);
+              return (
+                <button
+                  key={index}
+                  onClick={() => onExerciseSelect(exercise)}
+                  className={`w-full p-4 rounded-2xl text-left shadow-sm touch-action-manipulation active-scale ${
+                    isCompleted 
+                      ? 'bg-green-50 border-2 border-green-200' 
+                      : 'bg-white border-2 border-gray-100'
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center flex-1 min-w-0">
+                      {exercise.gif && (
+                        <img 
+                          src={exercise.gif} 
+                          alt={exercise.name}
+                          className="w-12 h-12 rounded-xl mr-3 object-cover bg-gray-100 flex-shrink-0"
+                        />
+                      )}
+                      <div className="flex-1 min-w-0">
+                        <div className="font-semibold text-gray-800 text-responsive leading-tight truncate">{exercise.name}</div>
+                        <div className="text-xs text-gray-500 mt-1">
+                          {exercise.type === 'reps' ? 
+                            ('targetReps' in exercise ? `${exercise.targetReps} reps` : 'Reps') : 
+                            ('targetSets' in exercise ? `${exercise.targetSets} sets` : 'Weight')
+                          }
+                        </div>
                       </div>
                     </div>
+                    {isCompleted && <span className="text-green-500 text-lg ml-2 flex-shrink-0">✓</span>}
                   </div>
-                  {isCompleted && <span className="text-green-500 text-lg ml-2 flex-shrink-0">✓</span>}
-                </div>
-              </button>
-            );
-          })}
+                </button>
+              );
+            })}
+          </div>
         </div>
       </div>
       

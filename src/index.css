@@ -2,36 +2,72 @@
 @tailwind components;
 @tailwind utilities;
 
-@supports (padding: max(0px)) {
-  .safe-top {
-    padding-top: max(1rem, env(safe-area-inset-top));
-  }
-  .safe-bottom {
-    padding-bottom: max(1rem, env(safe-area-inset-bottom));
-  }
-  .safe-left {
-    padding-left: max(1rem, env(safe-area-inset-left));
-  }
-  .safe-right {
-    padding-right: max(1rem, env(safe-area-inset-right));
-  }
+/* Safari iPhone 16 Safe Area Support */
+.safe-top {
+  padding-top: env(safe-area-inset-top, 1rem);
+}
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 1rem);
+}
+.safe-left {
+  padding-left: env(safe-area-inset-left, 1rem);
+}
+.safe-right {
+  padding-right: env(safe-area-inset-right, 1rem);
 }
 
+/* Safari specific fixes */
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
   overscroll-behavior: none;
+  -webkit-overflow-scrolling: touch;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
   -webkit-overflow-scrolling: touch;
 }
 
+/* Touch optimizations for Safari */
 .touch-action-manipulation {
   touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
+/* Input fixes for Safari */
+input[type="number"], input[type="date"] {
+  -webkit-appearance: none;
+  appearance: none;
+  border-radius: 0.75rem;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 1;
+  cursor: pointer;
+}
+
+/* Button fixes for Safari */
+button {
+  -webkit-appearance: none;
+  appearance: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+/* Responsive text for iPhone 16 */
 @media (max-width: 430px) {
   .text-responsive {
     font-size: clamp(0.875rem, 4vw, 1rem);
@@ -41,5 +77,25 @@ body {
   }
   .text-responsive-xl {
     font-size: clamp(1.25rem, 6vw, 1.5rem);
+  }
+}
+
+/* Safari scroll fixes */
+.scroll-container {
+  -webkit-overflow-scrolling: touch;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/* Active state fixes for Safari */
+.active-scale:active {
+  transform: scale(0.95);
+  transition: transform 0.1s ease;
+}
+
+/* Prevent zoom on input focus */
+@media screen and (max-width: 430px) {
+  input, select, textarea {
+    font-size: 16px !important;
   }
 }
