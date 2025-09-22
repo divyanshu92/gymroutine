@@ -94,7 +94,7 @@ const ExerciseTracker: React.FC<ExerciseTrackerProps> = ({ exercise, onSave, onB
 
       <div className="flex-1 overflow-hidden">
         <div className="h-full scroll-container px-4 safe-left safe-right">
-          <div className="max-w-sm mx-auto pt-4">
+          <div className="max-w-sm mx-auto pt-6">
           {exercise.gif && (
             <div className="mb-6">
               <img 

@@ -29,7 +29,7 @@ const DaySelection: React.FC<DaySelectionProps> = ({ onDaySelect }) => {
   return (
     <div className="h-screen bg-gray-50 overflow-hidden">
       <div className="h-full scroll-container safe-top safe-bottom safe-left safe-right">
-        <div className="max-w-sm mx-auto px-4 py-4">
+        <div className="max-w-sm mx-auto px-4 py-6">
           <h1 className="text-responsive-xl font-bold mb-6 text-center text-gray-800">Gym Routine</h1>
           
           <div className="mb-6 bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
