@@ -2,13 +2,13 @@ import React, { useState, useMemo } from 'react';
 import { Exercise } from '../types/workout';
 
 interface ExerciseTrackerProps {
-  exercise: any;
+  exercise: Exercise & { gif?: string };
   onSave: (data: Exercise) => void;
   onBack: () => void;
 }
 
 const ExerciseTracker: React.FC<ExerciseTrackerProps> = ({ exercise, onSave, onBack }) => {
-  const [sets, setSets] = useState<any[]>([]);
+  const [sets, setSets] = useState<Array<{ set: number; reps?: number; weight?: number }>>([]);
   const [currentSet, setCurrentSet] = useState(1);
   const [reps, setReps] = useState('');
   const [weight, setWeight] = useState('');
@@ -36,11 +36,11 @@ const ExerciseTracker: React.FC<ExerciseTrackerProps> = ({ exercise, onSave, onB
       const workout = previousWorkouts
         .filter((w: any) => new Date(w.date) < today)
         .sort((a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime())
-        .find((w: any) => w.exercises.some((e: any) => e.name === exercise.name));
+        .find((w: Workout) => w.exercises.some((e: Exercise) => e.name === exercise.name));
       
       return {
         previousWorkout: workout,
-        previousExercise: workout?.exercises.find((e: any) => e.name === exercise.name)
+        previousExercise: workout?.exercises.find((e: Exercise) => e.name === exercise.name)
       };
     } catch (error) {
       console.error('Error loading previous workout:', error);

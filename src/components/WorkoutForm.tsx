@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
 interface WorkoutFormProps {
-    onSave: (workoutData: any) => void;
-    todayRoutine: any[];
+    onSave: (workoutData: Exercise) => void;
+    todayRoutine: (Exercise & { gif?: string })[];
 }
 
 const WorkoutForm: React.FC<WorkoutFormProps> = ({ onSave, todayRoutine }) => {
@@ -62,8 +62,8 @@ const WorkoutForm: React.FC<WorkoutFormProps> = ({ onSave, todayRoutine }) => {
                 className="p-2 border border-gray-300 rounded"
             >
                 <option value="">Select from today's routine</option>
-                {todayRoutine.map((exercise, index) => (
-                    <option key={index} value={exercise.name}>
+                {todayRoutine.map((exercise) => (
+                    <option key={exercise.name} value={exercise.name}>
                         {exercise.name} ({exercise.type})
                     </option>
                 ))}

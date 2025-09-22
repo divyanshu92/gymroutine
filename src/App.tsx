@@ -12,7 +12,7 @@ const App: React.FC = () => {
   const [currentPage, setCurrentPage] = useLocalStorage<Page>('currentPage', 'daySelection');
   const [selectedDay, setSelectedDay] = useLocalStorage<keyof typeof DAILY_ROUTINES>('selectedDay', 'Monday');
   const [selectedDate, setSelectedDate] = useLocalStorage<string>('selectedDate', new Date().toISOString().split('T')[0]);
-  const [selectedExercise, setSelectedExercise] = useState<any>(null);
+  const [selectedExercise, setSelectedExercise] = useState<Exercise & { gif?: string } | null>(null);
   const [workouts, setWorkouts] = useLocalStorage<Workout[]>('workouts', []);
   const [sessionStartTime, setSessionStartTime] = useLocalStorage<string | null>('sessionStartTime', null);
 
@@ -26,7 +26,7 @@ const App: React.FC = () => {
     }
   };
 
-  const handleExerciseSelect = (exercise: any) => {
+  const handleExerciseSelect = (exercise: Exercise & { gif?: string }) => {
     setSelectedExercise(exercise);
     setCurrentPage('exerciseTracker');
   };
