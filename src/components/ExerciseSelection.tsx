@@ -63,7 +63,7 @@ const ExerciseSelection: React.FC<ExerciseSelectionProps> = ({
       
       <div className="flex-1 overflow-hidden">
         <div className="h-full scroll-container px-4 safe-left safe-right">
-          <div className="max-w-sm mx-auto space-y-3 pt-4 pb-40">
+          <div className="max-w-sm mx-auto space-y-3 pt-4 pb-32">
             {exercises.map((exercise, index) => {
               const isCompleted = completedExercises.includes(exercise.name);
               return (

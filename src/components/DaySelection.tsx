@@ -50,7 +50,7 @@ const DaySelection: React.FC<DaySelectionProps> = ({ onDaySelect }) => {
             </div>
           </div>
           
-          <div className="space-y-3 pb-6">
+          <div className="space-y-3 pb-8">
             {days.map((day) => (
               <button
                 key={day}

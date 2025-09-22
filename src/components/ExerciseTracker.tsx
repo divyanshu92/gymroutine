@@ -255,7 +255,7 @@ const ExerciseTracker: React.FC<ExerciseTrackerProps> = ({ exercise, onSave, onB
             )}
           </div>
 
-          <div className="pb-8 safe-bottom">
+          <div className="pb-32 safe-bottom">
             {sets.length > 0 && (
               <button
                 onClick={handleSave}
