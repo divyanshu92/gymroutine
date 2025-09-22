@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
+import { Exercise } from '../types/workout';
 
 interface WorkoutFormProps {
     onSave: (workoutData: Exercise) => void;
-    todayRoutine: (Exercise & { gif?: string })[];
+    todayRoutine: any[];
 }
 
 const WorkoutForm: React.FC<WorkoutFormProps> = ({ onSave, todayRoutine }) => {
@@ -28,8 +29,8 @@ const WorkoutForm: React.FC<WorkoutFormProps> = ({ onSave, todayRoutine }) => {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        const workoutData = {
-            exerciseName,
+        const workoutData: Exercise = {
+            name: exerciseName,
             type: exerciseType,
             ...(exerciseType === 'reps' ? {
                 targetSets: Number(targetSets),

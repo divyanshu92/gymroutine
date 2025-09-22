@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Exercise } from '../types/workout';
+import { Exercise, Workout } from '../types/workout';
 
 interface ExerciseTrackerProps {
   exercise: Exercise & { gif?: string };
@@ -15,8 +15,8 @@ const ExerciseTracker: React.FC<ExerciseTrackerProps> = ({ exercise, onSave, onB
   const [customTargetReps, setCustomTargetReps] = useState<number | null>(null);
   const [showTargetEditor, setShowTargetEditor] = useState(false);
 
-  const targetReps = customTargetReps || ('targetReps' in exercise ? exercise.targetReps : 0);
-  const targetSets = 'targetSets' in exercise ? exercise.targetSets : 0;
+  const targetReps = customTargetReps || exercise.targetReps || 0;
+  const targetSets = exercise.targetSets || 0;
   const totalRepsCompleted = sets.reduce((total, set) => total + (set.reps || 0), 0);
   const remainingReps = Math.max(0, targetReps - totalRepsCompleted);
   const remainingSets = Math.max(0, targetSets - sets.length);
@@ -36,7 +36,7 @@ const ExerciseTracker: React.FC<ExerciseTrackerProps> = ({ exercise, onSave, onB
       const workout = previousWorkouts
         .filter((w: any) => new Date(w.date) < today)
         .sort((a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime())
-        .find((w: Workout) => w.exercises.some((e: Exercise) => e.name === exercise.name));
+        .find((w: any) => w.exercises.some((e: any) => e.name === exercise.name));
       
       return {
         previousWorkout: workout,
