@@ -81,9 +81,9 @@ const ExerciseTracker: React.FC<ExerciseTrackerProps> = ({ exercise, onSave, onB
   };
 
   return (
-    <div className="h-screen bg-gray-50 flex flex-col overflow-hidden">
-      <div className="bg-white shadow-sm z-10 safe-top flex-shrink-0">
-        <div className="flex items-center max-w-sm mx-auto px-4 py-3">
+    <div className="h-screen bg-gray-50 flex flex-col overflow-hidden" style={{ height: '100vh', height: '100dvh' }}>
+      <div className="bg-white shadow-sm z-10 pt-safe-top flex-shrink-0">
+        <div className="flex items-center max-w-sm mx-auto px-4 py-4">
           <button 
             onClick={onBack}
             className="p-3 bg-gray-100 rounded-2xl mr-4 touch-action-manipulation active-scale"
@@ -95,8 +95,8 @@ const ExerciseTracker: React.FC<ExerciseTrackerProps> = ({ exercise, onSave, onB
       </div>
 
       <div className="flex-1 overflow-hidden">
-        <div className="h-full scroll-container px-6 safe-left safe-right">
-          <div className="max-w-sm mx-auto pt-8">
+        <div className="h-full overflow-y-auto -webkit-overflow-scrolling-touch px-6 pl-safe-left pr-safe-right">
+          <div className="max-w-sm mx-auto pt-6">
           {exercise.gif && (
             <div className="mb-6">
               <img 
@@ -123,8 +123,10 @@ const ExerciseTracker: React.FC<ExerciseTrackerProps> = ({ exercise, onSave, onB
                   <div className="mb-4 flex items-center justify-center gap-2">
                     <input
                       type="number"
+                      inputMode="numeric"
                       placeholder={targetReps.toString()}
-                      className="w-20 p-3 border-2 rounded-xl text-center text-responsive touch-action-manipulation"
+                      className="w-20 p-3 border-2 rounded-xl text-center text-base touch-action-manipulation"
+                      style={{ fontSize: '16px' }}
                       onKeyPress={(e) => {
                         if (e.key === 'Enter') {
                           const newTarget = parseInt((e.target as HTMLInputElement).value);
@@ -209,20 +211,22 @@ const ExerciseTracker: React.FC<ExerciseTrackerProps> = ({ exercise, onSave, onB
               {exercise.type === 'reps' ? (
                 <input
                   type="number"
+                  inputMode="numeric"
                   placeholder={isRepBased ? `Reps (${remainingReps} left)` : "Reps"}
                   value={reps}
                   onChange={(e) => setReps(e.target.value)}
                   className="w-full p-4 border-2 border-gray-200 rounded-2xl focus:border-blue-500 focus:outline-none touch-action-manipulation"
-                  style={{ fontSize: '16px' }}
+                  style={{ fontSize: '16px', WebkitAppearance: 'none' }}
                 />
               ) : (
                 <input
                   type="number"
+                  inputMode="numeric"
                   placeholder="Weight (kg)"
                   value={weight}
                   onChange={(e) => setWeight(e.target.value)}
                   className="w-full p-4 border-2 border-gray-200 rounded-2xl focus:border-blue-500 focus:outline-none touch-action-manipulation"
-                  style={{ fontSize: '16px' }}
+                  style={{ fontSize: '16px', WebkitAppearance: 'none' }}
                 />
               )}
               <button
@@ -257,7 +261,7 @@ const ExerciseTracker: React.FC<ExerciseTrackerProps> = ({ exercise, onSave, onB
             )}
           </div>
 
-          <div className="pb-40 safe-bottom">
+          <div className="pb-40 pb-safe-bottom">
             {sets.length > 0 && (
               <button
                 onClick={handleSave}

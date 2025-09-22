@@ -3,6 +3,20 @@
 @tailwind utilities;
 
 /* Safari iPhone 16 Safe Area Support */
+.pt-safe-top {
+  padding-top: env(safe-area-inset-top, 1rem);
+}
+.pb-safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 1rem);
+}
+.pl-safe-left {
+  padding-left: env(safe-area-inset-left, 1rem);
+}
+.pr-safe-right {
+  padding-right: env(safe-area-inset-right, 1rem);
+}
+
+/* Legacy support */
 .safe-top {
   padding-top: env(safe-area-inset-top, 1rem);
 }
@@ -53,6 +67,13 @@ input[type="number"], input[type="date"] {
   border-radius: 0.75rem;
 }
 
+/* iPhone 16 specific input optimizations */
+input[inputmode="numeric"] {
+  -webkit-appearance: none;
+  appearance: none;
+  border-radius: 0.75rem;
+}
+
 input[type="date"]::-webkit-calendar-picker-indicator {
   opacity: 1;
   cursor: pointer;
@@ -85,6 +106,10 @@ button {
   -webkit-overflow-scrolling: touch;
   overflow-y: auto;
   overscroll-behavior: contain;
+}
+
+.-webkit-overflow-scrolling-touch {
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Active state fixes for Safari */
