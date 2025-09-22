@@ -9,7 +9,7 @@
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
-    "push-deploy": "git add . && git commit -m 'Update for deployment' && git push && npm run deploy"
+    "push-deploy": "npm run deploy &&git add . && git commit -m 'Update for deployment' && git push"
   },
   "dependencies": {
     "autoprefixer": "^10.4.17",
