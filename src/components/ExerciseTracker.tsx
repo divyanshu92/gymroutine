@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { Exercise, Workout } from '../types/workout';
+import useLocalStorage from '../hooks/useLocalStorage';
 
 interface ExerciseTrackerProps {
   exercise: Exercise & { gif?: string };
@@ -8,11 +9,11 @@ interface ExerciseTrackerProps {
 }
 
 const ExerciseTracker: React.FC<ExerciseTrackerProps> = ({ exercise, onSave, onBack }) => {
-  const [sets, setSets] = useState<Array<{ set: number; reps?: number; weight?: number }>>([]);
-  const [currentSet, setCurrentSet] = useState(1);
+  const [sets, setSets] = useLocalStorage<Array<{ set: number; reps?: number; weight?: number }>>(`sets_${exercise.name}_${new Date().toISOString().split('T')[0]}`, []);
+  const [currentSet, setCurrentSet] = useLocalStorage<number>(`currentSet_${exercise.name}`, 1);
   const [reps, setReps] = useState('');
   const [weight, setWeight] = useState('');
-  const [customTargetReps, setCustomTargetReps] = useState<number | null>(null);
+  const [customTargetReps, setCustomTargetReps] = useLocalStorage<number | null>(`targetReps_${exercise.name}`, null);
   const [showTargetEditor, setShowTargetEditor] = useState(false);
 
   const targetReps = customTargetReps || exercise.targetReps || 0;
@@ -77,6 +78,10 @@ const ExerciseTracker: React.FC<ExerciseTrackerProps> = ({ exercise, onSave, onB
         completedWeight: sets.length > 0 ? sets[sets.length - 1].weight : 0
       })
     };
+    // Clear temporary data after saving
+    localStorage.removeItem(`sets_${exercise.name}_${new Date().toISOString().split('T')[0]}`);
+    localStorage.removeItem(`currentSet_${exercise.name}`);
+    localStorage.removeItem(`targetReps_${exercise.name}`);
     onSave(exerciseData);
   };
 
@@ -106,7 +111,7 @@ const ExerciseTracker: React.FC<ExerciseTrackerProps> = ({ exercise, onSave, onB
                 onError={(e) => {
                   e.currentTarget.style.display = 'none';
                 }}
-                className="w-full h-44 rounded-2xl object-cover bg-gray-100"
+                className="w-full h-52 rounded-2xl object-contain bg-gray-100"
               />
             </div>
           )}
@@ -219,6 +224,11 @@ const ExerciseTracker: React.FC<ExerciseTrackerProps> = ({ exercise, onSave, onB
                   placeholder={isRepBased ? `Reps (${remainingReps} left)` : "Reps"}
                   value={reps}
                   onChange={(e) => setReps(e.target.value)}
+                  onKeyPress={(e) => {
+                    if (e.key === 'Enter') {
+                      addSet();
+                    }
+                  }}
                   className="w-full p-4 border-2 border-gray-200 rounded-2xl focus:border-blue-500 focus:outline-none touch-action-manipulation"
                   style={{ fontSize: '16px', WebkitAppearance: 'none' }}
                 />
@@ -229,6 +239,11 @@ const ExerciseTracker: React.FC<ExerciseTrackerProps> = ({ exercise, onSave, onB
                   placeholder="Weight (kg)"
                   value={weight}
                   onChange={(e) => setWeight(e.target.value)}
+                  onKeyPress={(e) => {
+                    if (e.key === 'Enter') {
+                      addSet();
+                    }
+                  }}
                   className="w-full p-4 border-2 border-gray-200 rounded-2xl focus:border-blue-500 focus:outline-none touch-action-manipulation"
                   style={{ fontSize: '16px', WebkitAppearance: 'none' }}
                 />

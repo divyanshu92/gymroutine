@@ -12,7 +12,7 @@ const App: React.FC = () => {
   const [currentPage, setCurrentPage] = useLocalStorage<Page>('currentPage', 'daySelection');
   const [selectedDay, setSelectedDay] = useLocalStorage<keyof typeof DAILY_ROUTINES>('selectedDay', 'Monday');
   const [selectedDate, setSelectedDate] = useLocalStorage<string>('selectedDate', new Date().toISOString().split('T')[0]);
-  const [selectedExercise, setSelectedExercise] = useState<Exercise & { gif?: string } | null>(null);
+  const [selectedExercise, setSelectedExercise] = useLocalStorage<Exercise & { gif?: string } | null>('selectedExercise', null);
   const [workouts, setWorkouts] = useLocalStorage<Workout[]>('workouts', []);
   const [sessionStartTime, setSessionStartTime] = useLocalStorage<string | null>('sessionStartTime', null);
 
@@ -32,6 +32,7 @@ const App: React.FC = () => {
   };
 
   const handleSaveExercise = (exerciseData: Exercise) => {
+    console.log('Saving exercise:', exerciseData);
     const existingWorkoutIndex = workouts.findIndex(w => w.date === selectedDate);
     
     let updatedWorkouts;
@@ -50,6 +51,7 @@ const App: React.FC = () => {
       updatedWorkouts = [...workouts, newWorkout];
     }
     
+    console.log('Updated workouts:', updatedWorkouts);
     setWorkouts(updatedWorkouts);
     
     // Check if all exercises are completed
@@ -106,12 +108,26 @@ const App: React.FC = () => {
           />
         )}
         
-        {currentPage === 'exerciseTracker' && selectedExercise && (
-          <ExerciseTracker 
-            exercise={selectedExercise}
-            onSave={handleSaveExercise}
-            onBack={handleBack}
-          />
+        {currentPage === 'exerciseTracker' && (
+          selectedExercise ? (
+            <ExerciseTracker 
+              exercise={selectedExercise}
+              onSave={handleSaveExercise}
+              onBack={handleBack}
+            />
+          ) : (
+            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+              <div className="text-center">
+                <p className="text-gray-600 mb-4">Exercise not found</p>
+                <button 
+                  onClick={() => setCurrentPage('exerciseSelection')}
+                  className="px-4 py-2 bg-blue-500 text-white rounded"
+                >
+                  Back to Exercises
+                </button>
+              </div>
+            </div>
+          )
         )}
         
         {currentPage === 'thankYou' && (
