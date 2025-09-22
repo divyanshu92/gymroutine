@@ -81,7 +81,7 @@ const ExerciseTracker: React.FC<ExerciseTrackerProps> = ({ exercise, onSave, onB
   };
 
   return (
-    <div className="h-screen bg-gray-50 flex flex-col overflow-hidden" style={{ height: '100vh', height: '100dvh' }}>
+    <div className="h-screen bg-gray-50 flex flex-col overflow-hidden" style={{ height: '100dvh' }}>
       <div className="bg-white shadow-sm z-10 pt-safe-top flex-shrink-0">
         <div className="flex items-center max-w-sm mx-auto px-4 py-4">
           <button 
