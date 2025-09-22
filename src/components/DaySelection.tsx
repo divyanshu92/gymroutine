@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { DAILY_ROUTINES } from '../types/workout';
 
 interface DaySelectionProps {
@@ -6,7 +6,8 @@ interface DaySelectionProps {
 }
 
 const DaySelection: React.FC<DaySelectionProps> = ({ onDaySelect }) => {
-  const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
+  const todayString = useMemo(() => new Date().toISOString().split('T')[0], []);
+  const [selectedDate, setSelectedDate] = useState(todayString);
   const days = Object.keys(DAILY_ROUTINES) as (keyof typeof DAILY_ROUTINES)[];
 
   const getDayFromDate = (dateString: string): keyof typeof DAILY_ROUTINES => {
@@ -42,11 +43,11 @@ const DaySelection: React.FC<DaySelectionProps> = ({ onDaySelect }) => {
               style={{ fontSize: '16px' }}
             />
             <div className="mt-3 text-sm text-gray-600 text-center">
-              {new Date(selectedDate).toLocaleDateString('en-US', { 
+              {useMemo(() => new Date(selectedDate).toLocaleDateString('en-US', { 
                 weekday: 'long', 
                 month: 'short', 
                 day: 'numeric' 
-              })}
+              }), [selectedDate])}
             </div>
           </div>
           

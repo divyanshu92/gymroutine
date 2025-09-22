@@ -15,7 +15,7 @@ export const getLastFiveWeeks = (): Date[] => {
     const dates = [];
     const today = new Date();
     for (let i = 0; i < 5; i++) {
-        const pastDate = new Date();
+        const pastDate = new Date(today);
         pastDate.setDate(today.getDate() - (i * 7));
         dates.push(pastDate);
     }

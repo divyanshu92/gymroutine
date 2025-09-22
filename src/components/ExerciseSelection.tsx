@@ -22,11 +22,17 @@ const ExerciseSelection: React.FC<ExerciseSelectionProps> = ({
   React.useEffect(() => {
     const sessionStartTime = localStorage.getItem('sessionStartTime');
     if (sessionStartTime) {
-      const timer = setInterval(() => {
-        const elapsed = Math.floor((Date.now() - new Date(JSON.parse(sessionStartTime)).getTime()) / 60000);
-        setSessionTime(elapsed);
-      }, 60000);
-      return () => clearInterval(timer);
+      let timer: NodeJS.Timeout;
+      try {
+        const startTime = new Date(JSON.parse(sessionStartTime)).getTime();
+        timer = setInterval(() => {
+          const elapsed = Math.floor((Date.now() - startTime) / 60000);
+          setSessionTime(elapsed);
+        }, 60000);
+      } catch (error) {
+        console.error('Invalid session start time:', error);
+      }
+      return () => timer && clearInterval(timer);
     }
   }, []);
   const exercises = DAILY_ROUTINES[selectedDay];
@@ -64,11 +70,11 @@ const ExerciseSelection: React.FC<ExerciseSelectionProps> = ({
       <div className="flex-1 overflow-hidden">
         <div className="h-full scroll-container px-6 safe-left safe-right">
           <div className="max-w-sm mx-auto space-y-3 pt-8 pb-40">
-            {exercises.map((exercise, index) => {
+            {exercises.map((exercise) => {
               const isCompleted = completedExercises.includes(exercise.name);
               return (
                 <button
-                  key={index}
+                  key={exercise.name}
                   onClick={() => onExerciseSelect(exercise)}
                   className={`w-full p-4 rounded-2xl text-left shadow-sm touch-action-manipulation active-scale ${
                     isCompleted 

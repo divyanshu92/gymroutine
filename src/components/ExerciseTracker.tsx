@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Exercise } from '../types/workout';
 
 interface ExerciseTrackerProps {
@@ -29,22 +29,24 @@ const ExerciseTracker: React.FC<ExerciseTrackerProps> = ({ exercise, onSave, onB
   };
 
   // Get previous workout data for this exercise
-  const getPreviousWorkout = () => {
-    const today = new Date();
-    const dayOfWeek = today.getDay();
-    const daysToSubtract = dayOfWeek === 0 ? 6 : dayOfWeek - 1; // Get last Monday
-    const lastWeek = new Date(today);
-    lastWeek.setDate(today.getDate() - 7);
-    
-    const previousWorkouts = JSON.parse(localStorage.getItem('workouts') || '[]');
-    return previousWorkouts
-      .filter((w: any) => new Date(w.date) < today)
-      .sort((a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime())
-      .find((w: any) => w.exercises.some((e: any) => e.name === exercise.name));
-  };
-
-  const previousWorkout = getPreviousWorkout();
-  const previousExercise = previousWorkout?.exercises.find((e: any) => e.name === exercise.name);
+  const { previousWorkout, previousExercise } = useMemo(() => {
+    try {
+      const today = new Date();
+      const previousWorkouts = JSON.parse(localStorage.getItem('workouts') || '[]');
+      const workout = previousWorkouts
+        .filter((w: any) => new Date(w.date) < today)
+        .sort((a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime())
+        .find((w: any) => w.exercises.some((e: any) => e.name === exercise.name));
+      
+      return {
+        previousWorkout: workout,
+        previousExercise: workout?.exercises.find((e: any) => e.name === exercise.name)
+      };
+    } catch (error) {
+      console.error('Error loading previous workout:', error);
+      return { previousWorkout: null, previousExercise: null };
+    }
+  }, [exercise.name]);
 
   const addSet = () => {
     if (exercise.type === 'reps' && reps) {
@@ -239,7 +241,7 @@ const ExerciseTracker: React.FC<ExerciseTrackerProps> = ({ exercise, onSave, onB
             ) : (
               <div className="space-y-3">
                 {sets.map((set, index) => (
-                  <div key={index} className="flex justify-between items-center p-4 bg-white rounded-2xl border border-gray-100">
+                  <div key={`${set.set}-${index}`} className="flex justify-between items-center p-4 bg-white rounded-2xl border border-gray-100">
                     <span className="text-responsive font-medium">
                       Set {set.set}: {exercise.type === 'reps' ? `${set.reps} reps` : `${set.weight} kg`}
                     </span>

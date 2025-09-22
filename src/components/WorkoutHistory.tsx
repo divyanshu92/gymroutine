@@ -35,7 +35,7 @@ const WorkoutHistory: React.FC<WorkoutHistoryProps> = ({ workouts, selectedDay, 
             ) : (
               <div className="space-y-2">
                 {selectedWorkout.exercises.map((exercise, index) => (
-                  <div key={index} className="text-xs p-3 bg-gray-50 rounded-xl">
+                  <div key={`${exercise.name}-${index}`} className="text-xs p-3 bg-gray-50 rounded-xl">
                     <div className="font-medium text-gray-800 truncate">{exercise.name}</div>
                     <div className="text-gray-500 mt-1">
                       {exercise.type === 'reps' ? (

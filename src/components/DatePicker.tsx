@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 
 const DatePicker: React.FC<{ onDateChange: (date: string) => void }> = ({ onDateChange }) => {
-    const [selectedDate, setSelectedDate] = useState<string>(new Date().toISOString().split('T')[0]);
+    const todayString = useMemo(() => new Date().toISOString().split('T')[0], []);
+    const [selectedDate, setSelectedDate] = useState<string>(todayString);
 
     const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const newDate = event.target.value;
@@ -18,7 +19,7 @@ const DatePicker: React.FC<{ onDateChange: (date: string) => void }> = ({ onDate
                 value={selectedDate}
                 onChange={handleDateChange}
                 className="border rounded p-2"
-                max={new Date().toISOString().split('T')[0]}
+                max={todayString}
             />
         </div>
     );
