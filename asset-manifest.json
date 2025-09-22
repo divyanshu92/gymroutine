@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/gymroutine/static/css/main.18ce6dd1.css",
-    "main.js": "/gymroutine/static/js/main.d586982d.js",
+    "main.css": "/gymroutine/static/css/main.d0faeb22.css",
+    "main.js": "/gymroutine/static/js/main.127ea394.js",
     "index.html": "/gymroutine/index.html",
-    "main.18ce6dd1.css.map": "/gymroutine/static/css/main.18ce6dd1.css.map",
-    "main.d586982d.js.map": "/gymroutine/static/js/main.d586982d.js.map"
+    "main.d0faeb22.css.map": "/gymroutine/static/css/main.d0faeb22.css.map",
+    "main.127ea394.js.map": "/gymroutine/static/js/main.127ea394.js.map"
   },
   "entrypoints": [
-    "static/css/main.18ce6dd1.css",
-    "static/js/main.d586982d.js"
+    "static/css/main.d0faeb22.css",
+    "static/js/main.127ea394.js"
   ]
 }
