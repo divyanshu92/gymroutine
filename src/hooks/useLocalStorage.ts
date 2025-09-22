@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 
 function useLocalStorage<T>(key: string, initialValue: T) {
     const [storedValue, setStoredValue] = useState<T>(() => {
+        if (typeof window === 'undefined') return initialValue;
         try {
             const item = window.localStorage.getItem(key);
             return item ? JSON.parse(item) : initialValue;
@@ -12,6 +13,7 @@ function useLocalStorage<T>(key: string, initialValue: T) {
     });
 
     const setValue = (value: T | ((val: T) => T)) => {
+        if (typeof window === 'undefined') return;
         try {
             const valueToStore = value instanceof Function ? value(storedValue) : value;
             setStoredValue(valueToStore);

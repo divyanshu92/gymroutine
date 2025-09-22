@@ -89,39 +89,56 @@ const App: React.FC = () => {
     }
   };
 
-  return (
-    <div className="min-h-screen bg-gray-50">
-      {currentPage === 'daySelection' && (
-        <DaySelection onDaySelect={handleDaySelect} />
-      )}
-      
-      {currentPage === 'exerciseSelection' && (
-        <ExerciseSelection 
-          selectedDay={selectedDay}
-          selectedDate={selectedDate}
-          onExerciseSelect={handleExerciseSelect}
-          onBack={handleBack}
-          workouts={workouts}
-        />
-      )}
-      
-      {currentPage === 'exerciseTracker' && selectedExercise && (
-        <ExerciseTracker 
-          exercise={selectedExercise}
-          onSave={handleSaveExercise}
-          onBack={handleBack}
-        />
-      )}
-      
-      {currentPage === 'thankYou' && (
-        <ThankYouPage 
-          selectedDay={selectedDay}
-          selectedDate={selectedDate}
-          onBack={handleBack}
-        />
-      )}
-    </div>
-  );
+  try {
+    return (
+      <div className="min-h-screen bg-gray-50">
+        {currentPage === 'daySelection' && (
+          <DaySelection onDaySelect={handleDaySelect} />
+        )}
+        
+        {currentPage === 'exerciseSelection' && (
+          <ExerciseSelection 
+            selectedDay={selectedDay}
+            selectedDate={selectedDate}
+            onExerciseSelect={handleExerciseSelect}
+            onBack={handleBack}
+            workouts={workouts}
+          />
+        )}
+        
+        {currentPage === 'exerciseTracker' && selectedExercise && (
+          <ExerciseTracker 
+            exercise={selectedExercise}
+            onSave={handleSaveExercise}
+            onBack={handleBack}
+          />
+        )}
+        
+        {currentPage === 'thankYou' && (
+          <ThankYouPage 
+            selectedDay={selectedDay}
+            selectedDate={selectedDate}
+            onBack={handleBack}
+          />
+        )}
+      </div>
+    );
+  } catch (error) {
+    console.error('App render error:', error);
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+        <div className="text-center">
+          <h1 className="text-xl font-bold mb-4">Something went wrong</h1>
+          <button 
+            onClick={() => window.location.reload()}
+            className="px-4 py-2 bg-blue-500 text-white rounded"
+          >
+            Reload App
+          </button>
+        </div>
+      </div>
+    );
+  }
 };
 
 export default App;
