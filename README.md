@@ -146,7 +146,7 @@ interface Workout {
 
 ## Deployment
 
-- **Live Demo**: [https://divyanshudhiman.github.io/gym-routine-tracker](https://divyanshudhiman.github.io/gym-routine-tracker)
+- **Live Demo**: [https://divyanshu92.github.io/gymroutine/](https://divyanshu92.github.io/gymroutine/)
 - **Auto-deployment**: GitHub Actions workflow deploys on push to main
 - **SPA Support**: 404.html handles client-side routing on GitHub Pages
 

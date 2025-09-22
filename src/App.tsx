@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import DaySelection from './components/DaySelection';
 import ExerciseSelection from './components/ExerciseSelection';
 import ExerciseTracker from './components/ExerciseTracker';
+import ThankYouPage from './components/ThankYouPage';
 import useLocalStorage from './hooks/useLocalStorage';
 import { Workout, Exercise, DAILY_ROUTINES } from './types/workout';
 
-type Page = 'daySelection' | 'exerciseSelection' | 'exerciseTracker';
+type Page = 'daySelection' | 'exerciseSelection' | 'exerciseTracker' | 'thankYou';
 
 const App: React.FC = () => {
   const [currentPage, setCurrentPage] = useLocalStorage<Page>('currentPage', 'daySelection');
@@ -50,13 +51,22 @@ const App: React.FC = () => {
     }
     
     setWorkouts(updatedWorkouts);
-    setCurrentPage('exerciseSelection');
+    
+    // Check if all exercises are completed
+    const todayExercises = DAILY_ROUTINES[selectedDay];
+    const completedExercises = updatedWorkouts.find(w => w.date === selectedDate)?.exercises || [];
+    
+    if (completedExercises.length >= todayExercises.length) {
+      setCurrentPage('thankYou');
+    } else {
+      setCurrentPage('exerciseSelection');
+    }
   };
 
   const handleBack = () => {
     if (currentPage === 'exerciseTracker') {
       setCurrentPage('exerciseSelection');
-    } else if (currentPage === 'exerciseSelection') {
+    } else if (currentPage === 'exerciseSelection' || currentPage === 'thankYou') {
       // End gym session and calculate duration
       if (sessionStartTime) {
         const endTime = new Date().toISOString();
@@ -99,6 +109,14 @@ const App: React.FC = () => {
         <ExerciseTracker 
           exercise={selectedExercise}
           onSave={handleSaveExercise}
+          onBack={handleBack}
+        />
+      )}
+      
+      {currentPage === 'thankYou' && (
+        <ThankYouPage 
+          selectedDay={selectedDay}
+          selectedDate={selectedDate}
           onBack={handleBack}
         />
       )}
