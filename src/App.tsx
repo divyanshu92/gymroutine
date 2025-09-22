@@ -9,12 +9,12 @@ import { Workout, Exercise, DAILY_ROUTINES } from './types/workout';
 type Page = 'daySelection' | 'exerciseSelection' | 'exerciseTracker' | 'thankYou';
 
 const App: React.FC = () => {
-  const [currentPage, setCurrentPage] = useLocalStorage<Page>('currentPage', 'daySelection');
-  const [selectedDay, setSelectedDay] = useLocalStorage<keyof typeof DAILY_ROUTINES>('selectedDay', 'Monday');
-  const [selectedDate, setSelectedDate] = useLocalStorage<string>('selectedDate', new Date().toISOString().split('T')[0]);
+  const [currentPage, setCurrentPage] = useState<Page>('daySelection');
+  const [selectedDay, setSelectedDay] = useState<keyof typeof DAILY_ROUTINES>('Monday');
+  const [selectedDate, setSelectedDate] = useState<string>(new Date().toISOString().split('T')[0]);
   const [selectedExercise, setSelectedExercise] = useState<Exercise & { gif?: string } | null>(null);
   const [workouts, setWorkouts] = useLocalStorage<Workout[]>('workouts', []);
-  const [sessionStartTime, setSessionStartTime] = useLocalStorage<string | null>('sessionStartTime', null);
+  const [sessionStartTime, setSessionStartTime] = useState<string | null>(null);
 
   const handleDaySelect = (day: keyof typeof DAILY_ROUTINES, date: string) => {
     setSelectedDay(day);

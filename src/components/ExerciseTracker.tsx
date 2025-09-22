@@ -102,6 +102,10 @@ const ExerciseTracker: React.FC<ExerciseTrackerProps> = ({ exercise, onSave, onB
               <img 
                 src={exercise.gif} 
                 alt={exercise.name}
+                loading="lazy"
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none';
+                }}
                 className="w-full h-44 rounded-2xl object-cover bg-gray-100"
               />
             </div>

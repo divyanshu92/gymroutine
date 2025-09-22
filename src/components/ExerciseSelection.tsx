@@ -88,6 +88,10 @@ const ExerciseSelection: React.FC<ExerciseSelectionProps> = ({
                         <img 
                           src={exercise.gif} 
                           alt={exercise.name}
+                          loading="lazy"
+                          onError={(e) => {
+                            e.currentTarget.style.display = 'none';
+                          }}
                           className="w-12 h-12 rounded-xl mr-3 object-cover bg-gray-100 flex-shrink-0"
                         />
                       )}
